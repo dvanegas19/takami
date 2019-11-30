@@ -1,0 +1,105 @@
+<div class="container">
+    <h1>Deflectores</h1>
+    <form [formGroup]="formGroup">
+      <div class="form-group">
+        <label for="consumo">consumo de energía</label>
+        <input formControlName="consumo" type="number" class="form-control"  required>
+      </div>
+
+      <div class="form-group">
+        <label for="fuerza">fuerza de ruptura</label>
+        <input type="number" class="form-control" formControlName="fuerza">
+      </div>
+      <div class="form-group">
+        <label for="alterEgo"> Fuerza minima reacción </label>
+        <input type="number" class="form-control" formControlName="fuerzaMinima">
+      </div>   
+
+      <div class="form-group">
+        <label for="fabricante"> Fabricante </label>
+        <select class="form-control" formControlName="fabricante">
+          <option *ngFor="let fabricantes of listaFabricantes.response" [value]="fabricantes.IdFabricante">{{fabricantes.Fabricante}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="tipoEscudo"> Tipo escudo </label>
+        <select class="form-control" formControlName="tipoEscudo">
+          <option *ngFor="let tipo of tipoDeflectores.response" [value]="tipo.IdTipoEscudo">{{tipo.Descripcion}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="fechaLanzamiento"> Fecha de Lanzamiento </label>
+        <input type="date" min="2019-01-01" max="2020-01-30" class="form-control" formControlName="fechaLanzamiento">
+      </div>
+
+      <div class="form-group">
+        <label for="FechaVigencia">Fecha de Vigencia</label>
+        <input type="date"  min="2019-01-01" max="2020-01-30" class="form-control" formControlName="FechaVigencia">
+      </div>
+      
+      <div class="form-group" *ngIf="!editarVisible">
+        <button  (click)="Guardar()" [disabled]="formGroup.invalid" class="btn btn-success">Guardar</button>
+      </div>
+      <div class="form-group" *ngIf="editarVisible">
+        <button  (click)="EditarDeflector()" [disabled]="formGroup.invalid" class="btn btn-success">Editar</button>
+      </div>
+      <div class="form-group" >
+        <button  (click)="limpiarControles()"  class="btn btn-success">limpiar</button>
+      </div>
+      
+    </form>
+      <div class="form-group"> 
+        <table class="table table-bordered table-responsive-md table-striped text-center">
+          <tr>
+            <th class="text-center"> Fabricante </th>
+            <th class="text-center"> Descripción </th>
+            <th class="text-center"> Consumo </th>
+            <th class="text-center">Fuerza Ruptura</th>
+            <th class="text-center">Fuerza Minima</th>
+            <th class="text-center">Fecha Lanzamiento</th>
+            <th class="text-center">Fecha vencimiento</th>
+            <th class="text-center"></th>
+          </tr>
+          <tr *ngFor="let deflectores of listaDeflectores.response">
+            <td>
+              <span >{{deflectores.Fabricante}}</span>
+            </td>
+            <td>
+              <span contenteditable="true">{{deflectores.Descripcion}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" >{{deflectores.Consumo}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" >{{deflectores.FuerzaRuptura}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" >{{deflectores.FuerzaMinima}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" >{{deflectores.FechaLanzamiento}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" >{{deflectores.TiempoVidaEstimado}}</span>
+            </td>
+            <td>
+              <span class="table-up">
+                <a class="indigo-text">
+                  <button type="button" class="btn btn-danger"  (click)="eliminar(deflectores.IdEscudosDeflectores)">Eliminar</button>
+                </a>
+              </span>
+              <span class="table-down">
+                <a class="indigo-text">
+                  <button type="button" class="btn btn-success" (click)="editar(deflectores)">Editar</button>
+                </a>
+              </span>
+            </td>
+          </tr>
+        </table>
+      </div>
+   
+
+  
+</div>
